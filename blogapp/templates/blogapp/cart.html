@@ -1,0 +1,217 @@
+{% extends 'blogapp/base.html' %}
+{% load staticfiles %}
+{% load data_load %}
+{% block content %}
+{% load mathfilters %}
+    <div class="bg-light py-3">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 mb-0">
+            <a href="index.html">Home</a> <span class="mx-2 mb-0">/</span> 
+            <strong class="text-black">Cart</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+        <p>{% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}><h3 style="color:red">{{ message }}</h3></li>
+                {% endfor %}
+            </ul>
+        {% endif %}</p>  
+    <div class="site-section">
+      <div class="container">
+        <div class="row mb-5">
+            <div class="site-blocks-table">
+                <table class="table table-bordered" id="tbl_check_out">
+                    <thead>
+                        <tr>
+                            <th class="product-thumbnail">Image</th>
+                            <th class="product-name">Product</th>
+                            <th class="product-price">Price</th>
+                            <th class="product-quantity">Quantity</th>
+                            <th class="product-total">Total</th>
+                            <th class="product-remove">Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for cart in user_cart %}
+                        <tr id="{{cart.product_id}}">
+                            <td class="product-thumbnail">
+                                <img src="/static/blogapp/media/{{cart.product.image1}}" alt="Image" class="img-fluid">
+                            </td>
+                            <td class="product-name" >
+                                <h2 class="h5 text-black" >{{cart.product.name}}</h2>
+                                <input type="text" hidden  class="form-control" value="{{cart.product.name}}"  />
+                            </td>
+                            <td >{{cart.price }}</td>
+                            <input type="text" hidden id="price" class="form-control" value="{{cart.price }}"  />
+                            <td>
+                                <h2 class="h5 text-black" >{{cart.quantity}}</h2>
+                                <input type="text" hidden id="quantity" class="form-control" value="{{cart.quantity}}"  />
+                                <button  class="btn btn-primary btn-md btn-block" style="background-color:black"><a href="/update/{{cart.id}}">Update Cart</a></button>
+                            </td>
+                            <td>{{cart.line_total }}</td>
+                            <td><a href="/delete/{{ cart.id }}" class="btn btn-primary height-auto btn-sm">X</a></td>
+                        </tr>
+                    {% endfor %}
+                    
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    
+        <div class="row">
+          <div class="col-md-6">
+            <div class="row mb-5">
+              
+            </div>
+            
+          </div>
+          <div class="col-md-6 pl-5">
+            <div class="row justify-content-end">
+              <div class="col-md-7">
+
+                <div class="row">
+                  <div class="col-md-12 text-right border-bottom mb-5">
+                    <h3 class="text-black h4 text-uppercase">Cart Totals</h3>
+                  </div>
+                </div>
+
+                <div class="row mb-5">
+                  <div class="col-md-6">
+                    <span class="text-black">Total</span>
+                  </div>
+
+                  <div class="col-md-6 text-right">
+                    
+                    <span class="text-black" id="val"></span>
+                  </div>
+                </div>
+                <div class="row mb-5">
+                  <div class="col-md-6">
+                    <span class="text-black">Total( discount)</span>
+                  </div>
+
+                  <div class="col-md-6 text-right">
+                    
+                    <span class="text-black" id="val3"></span>
+                    
+                  </div>
+                </div>
+                <div class="row mb-5">
+                  <div class="col-md-6">
+                    <span class="text-black">Total( VAT)</span>
+                  </div>
+
+                  <div class="col-md-6 text-right">
+                    
+                    <span class="text-black" id="val2"></span>
+                    
+                  </div>
+                </div>
+                <div class="row mb-5">
+                  <div class="col-md-6">
+                    <span class="text-black">Grand Total </span>
+                  </div>
+
+                  <div class="col-md-6 text-right">
+                    
+                    <span class="text-black" id="val4"></span>
+                    
+                  </div>
+                </div>
+
+                <div  class="product1">
+                    <div class="col-md-12">
+                        <input type="text"  id="castomer_name" class="form-control" value=""  >
+                    </div>
+                    <div class="col-md-12">
+                        <input type="text" id="castomer_phone" class="form-control" value=""  >
+                    </div>
+                    <div class="col-md-12">
+                        <input type="button" name="submit" class="btn btn-primary btn-lg btn-block" id="btn_Checkout" value="Proceed To Checkout"/>
+                    </div>
+				</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+
+  <script src="{% static 'blogapp/js/jquery-3.3.1.min.js' %}"></script>
+
+<script>
+    $("#btn_Checkout").click(function() {
+        var confirm_msg = confirm("Are you sure to checkout?");
+        if (confirm_msg == true)
+        {
+            var flage = 0;
+            $("#tbl_check_out tbody tr").each(function()
+            {  
+                $.ajax({
+                    url: '/cart/',
+                    type:'GET',
+                    async: false,
+                    data : {
+                        
+                        'price': $('#price').val(),
+                        'product': this.id,
+                        'quantity': $('#quantity').val(),
+                        'castomer_name'  : $('#castomer_name').val(),
+                        'castomer_phone': $('#castomer_phone').val(),
+                    },
+                    success: function(data){
+                        flage = 1;
+                    },
+                    error: function(data){
+                        flage = 0;
+                    }
+                });  
+            });
+            
+            if(flage == 1) {
+                alert("Order Completed");
+            }
+            else alert("Order failed");
+        }
+    });
+</script>
+
+<script>
+
+    var table = document.getElementById("tbl_check_out"), sumVal = 0;
+    
+    for(var i = 1; i < table.rows.length; i++)
+    {
+        sumVal = sumVal + parseInt(table.rows[i].cells[4].innerHTML);
+        
+        if (sumVal > 24999 && sumVal < 50000)
+        {
+            discount =  (sumVal/100)*10
+        }
+        if (sumVal > 49999)
+        {
+            discount =  (sumVal/100)*20
+        }
+        VAT =  (discount/100)*5
+        total = (sumVal+VAT)-discount
+    }
+    
+    document.getElementById("val").innerHTML = " " + sumVal;
+    
+    document.getElementById("val3").innerHTML = " " + discount;
+    document.getElementById("val2").innerHTML = " " + VAT;
+    document.getElementById("val4").innerHTML = " " + total;
+    console.log(sumVal);
+    console.log(VAT);
+    
+</script>
+
+
+ {% endblock %}

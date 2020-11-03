@@ -1,0 +1,78 @@
+<html>
+    <head>
+    <title>Search :-{% if date_to_date_sell %} {{ from_date }} To {{ to_date }} {% else %}Location not found  {% endif %}</title>       
+    <meta charset="utf-8" />
+    </head>
+    <body>
+        <div class='wrapper'> 
+            <table style="background-color: #eee;" >
+                <tr>
+                    <td style="width:100%;">
+                        <h1 style="margin:0px;text-align:center;padding-top:30px;font-size:24px;">Invoice</h1>
+
+                    </td>
+                </tr>
+            </table>
+
+            <table width="100%" style="margin-top:10px;border:1px solid black;" id="table">
+                <thead>
+                    <tr>
+                        <th style="width:300px;text-align:center;font-size:10px;padding-top:3px;background-color:#ddd;">Name</th>
+                        <th style="text-align:left;font-size:10px;padding-top:3px;padding-left:3px;background-color:#ddd;width:20%;">Date</th>
+                        <th style="text-align:right;font-size:10px;padding-top:3px;padding-right:3px;background-color:#ddd;width:20%;">Price</th>
+                        <th style="text-align:center;font-size:10px;padding-top:3px;padding-right:3px;padding-right:3px;background-color:#ddd;width:20%;">Sold Quantity</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if product %}
+                        {% for data in product %}
+                            <tr class="gradeX odd" role="row">
+                                <td style="text-align:center;font-size:10px;padding-top:3px">{{ data.product }}</td>
+                                <td style="text-align:left;font-size:11px;padding-top:3px;padding-left:3px;width:30%;">{{ data.add_date }}</td>
+                                <td style="text-align:right;font-size:10px;padding-right:3px;padding-top:3px;width:20%;"> {{ data.price }} </td>
+                                <td style="text-align:center;font-size:10px;padding-top:3px;width:20%;"> {{ data.quantity }} </td>
+
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                         <td style="text-align:center;font-size:10px;padding-top:3px; color:red;" colspan="9">No Data</td>
+                    {% endif %}
+                    
+                </tbody>
+                
+            </table>
+        </div>
+        
+        <script>
+    
+    var table = document.getElementById("table"), sumVal = 0;
+    
+    for(var i = 1; i < table.rows.length; i++)
+    {
+        sumVal = sumVal + parseInt(table.rows[i].cells[4].innerHTML);
+        
+        if (sumVal > 24999 && sumVal < 50000)
+        {
+            discount =  (sumVal/100)*10
+        }
+        if (sumVal > 49999)
+        {
+            discount =  (sumVal/100)*20
+        }
+        VAT =  (discount/100)*5
+        total = (sumVal+VAT)-discount
+    }
+    
+    document.getElementById("val").innerHTML = " " + sumVal;
+    
+    document.getElementById("val3").innerHTML = " " + discount;
+    document.getElementById("val2").innerHTML = " " + VAT;
+    document.getElementById("val4").innerHTML = " " + total;
+    console.log(sumVal);
+    console.log(VAT);
+    
+</script>
+<span class="text-black" id="val4"></span>
+     </body>
+ </html>

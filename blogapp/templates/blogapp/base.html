@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+{% load static %}
+{% load data_load %}
+  <title>Medi &mdash; Store</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link href="https://fonts.googleapis.com/css?family=Rubik:400,700|Crimson+Text:400,400i" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'blogapp/fonts/icomoon/style.css' %}">
+
+  <link rel="stylesheet" href="{% static 'blogapp/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'blogapp/css/magnific-popup.css' %}">
+  <link rel="stylesheet" href="{% static 'blogapp/css/jquery-ui.css' %}">
+  <link rel="stylesheet" href="{% static 'blogapp/css/owl.carousel.min.css' %}">
+  <link rel="stylesheet" href="{% static 'blogapp/css/owl.theme.default.min.css' %}">
+
+
+  <link rel="stylesheet" href="{% static 'blogapp/css/aos.css' %}">
+
+  <link rel="stylesheet" href="{% static 'blogapp/css/style.css' %}">
+
+</head>
+
+<body>
+
+  <div class="site-wrap">
+
+
+    <div class="site-navbar py-2">
+
+      {% comment %} <div class="search-wrap">
+        <div class="container">
+          <a href="#" class="search-close js-search-close"><span class="icon-close2"></span></a>
+          <form action="#" method="post">
+            <input type="text" list="list" class="form-control" placeholder="Search keyword and hit enter...">
+            <datalist id="list" >
+            
+              {% for tip in tips %}
+                <option value="{{tip.disease_name}}">
+              {% endfor %}
+            
+
+            </datalist>
+          </form>
+        </div>
+      </div> {% endcomment %}
+
+      <div class="container">
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="logo">
+            
+          </div>
+          <div class="main-nav d-none d-lg-block">
+            <nav class="site-navigation text-right text-md-center" role="navigation">
+              <ul class="site-menu js-clone-nav d-none d-lg-block">
+                
+                <li><a href="/store">Sale</a></li>
+                
+              </ul>
+            </nav>
+          </div>
+          <div class="icons">
+            <a href="#" class="icons-btn d-inline-block js-search-open"><span class="icon-search"></span></a>
+            {% if request.session.email %}
+            <a href="/cart/" class="icons-btn d-inline-block bag">
+              <span class="icon-shopping-bag"></span>
+              
+            </a>
+            <a href="/logout/" class="icons-btn d-inline-block bag">
+              <span class="icon-sign-out"></span>
+              
+            </a>
+            {% else %}
+            <a href="/login/" class="icons-btn d-inline-block bag">
+              <span class="icon-user"></span>
+              
+            </a>
+            {% endif %}
+            <a href="#" class="site-menu-toggle js-menu-toggle ml-3 d-inline-block d-lg-none"><span
+                class="icon-menu"></span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+        {% block content %}
+
+        {% endblock %}
+
+
+
+
+
+
+
+
+
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="row">
+          
+
+
+          </div>
+        </div>
+        <div class="row pt-5 mt-5 text-center">
+          <div class="col-md-12">
+            <p>
+              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+              Copyright &copy;
+              <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made
+              with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank"
+                class="text-primary">Colorlib</a>
+              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </footer>
+  </div>
+
+
+  <script src="{% static 'blogapp/js/jquery-ui.js' %}"></script>
+  <script src="{% static 'blogapp/js/jquery-3.3.1.min.js' %}"></script>
+  <script src="{% static 'blogapp/js/popper.min.js' %}"></script>
+  <script src="{% static 'blogapp/js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'blogapp/js/owl.carousel.min.js' %}"></script>
+  <script src="{% static 'blogapp/js/jquery.magnific-popup.min.js' %}"></script>
+  <script src="{% static 'blogapp/js/aos.js' %}"></script>
+
+  <script src="{% static 'blogapp/js/main.js' %}"></script>
+
+</body>
+
+</html>

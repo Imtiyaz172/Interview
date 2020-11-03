@@ -1,0 +1,118 @@
+{% extends 'blogapp/base.html' %}
+{% load staticfiles %}
+{% load data_load %}
+{% block content %}
+{% load mathfilters %}
+
+    <div class="bg-light py-3">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 mb-0"><a href="/">Home</a> <span class="mx-2 mb-0">/</span> <a
+              href="">Store</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Product details</strong></div>
+        </div>
+      </div>
+    </div>
+<p>{% if messages %}
+                                <ul class="messages">
+                                    {% for message in messages %}
+                                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}><h3 style="color:red">{{ message }}</h3></li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}</p> 
+    <div class="site-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-5 mr-auto">
+            <div class="border text-center">
+                        {% if productS %}
+              <img src="/static/blogapp/media/{{productS.image1}}" alt="Image" class="img-fluid p-5">
+            {% else %}
+                <img src="/static/blogapp/media/{{product.image1}}" alt="Image" class="img-fluid p-5">
+            {% endif %}
+            </div>
+          </div>
+          <div class="col-md-6">
+            {% if productS %}
+            <h2 class="text-black">{{productS.name}}</h2>
+            {% else %}
+            <h2 class="text-black">{{product.name}} </h2>
+            {% endif %}
+            {% if productS %}
+                <p class="price">USD {{productS.company}} </p>
+              {% else %}
+                <p class="price">BDT {{product.company}} </p>
+              {% endif %}
+            
+              {% if productS %}
+                <p class="price">USD {{productS.new_price|mul:85.09}} </p>
+              {% else %}
+                <p class="price">BDT {{product.new_price}} </p>
+              {% endif %}
+            <form action="" method="POST">{% csrf_token %}
+            <div class="mb-5">
+              <div class="input-group mb-3" style="max-width: 220px;">
+                {% comment %} <div class="input-group-prepend">
+                  <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
+                </div> {% endcomment %}
+                {% if productS %}
+                <input type="text" class="form-control text-center" name="price" value="{{productS.new_price|mul:85}}" placeholder=""
+                  aria-label="Example text with button addon" aria-describedby="button-addon1" hidden>
+                  {% else %}
+                <input type="text" class="form-control text-center" name="price" value="{{product.new_price}}" placeholder=""
+                  aria-label="Example text with button addon" aria-describedby="button-addon1" hidden>
+                {% endif %}  
+                <input type="text" class="form-control text-center" name="quantity" value="1" placeholder=""
+                  aria-label="Example text with button addon" aria-describedby="button-addon1" hidden>
+                {% comment %} <div class="input-group-append">
+                  <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
+                </div> {% endcomment %}
+              </div>
+    
+            </div>
+            <p><button class="buy-now btn btn-sm height-auto px-4 py-3 btn-primary">Add To Cart</button></p>
+            </form>
+
+
+
+           
+                  {% comment %} <table class="table custom-table">
+                    <thead>
+                      <th>Material</th>
+                      <th>Description</th>
+                      <th>Packaging</th>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">OTC022401</th>
+                        <td>Pain Management: Acetaminophen PM Extra-Strength Caplets, 500 mg, 100/Bottle</td>
+                        <td>1 BT</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">OTC022401</th>
+                        <td>Pain Management: Acetaminophen PM Extra-Strength Caplets, 500 mg, 100/Bottle</td>
+                        <td>144/CS</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">OTC022401</th>
+                        <td>Pain Management: Acetaminophen PM Extra-Strength Caplets, 500 mg, 100/Bottle</td>
+                        <td>1 EA</td>
+                      </tr>
+                      
+                    </tbody>
+                  </table> {% endcomment %}
+
+            
+                </div>
+              </div>
+            </div>
+
+    
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+
+
+{% endblock %}

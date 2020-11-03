@@ -1,0 +1,45 @@
+   {% extends 'blogapp/base.html' %}
+{% load staticfiles %}
+{% load data_load %}
+{% block content %}
+   
+ <div class="site-section">
+      <div class="container">
+        <div class="row mb-5">
+          <form class="col-md-12" method="post">
+            <div class="site-blocks-table">
+              <table class="table table-bordered" id="table">
+                <thead>
+                  <tr>
+                    <th class="product-thumbnail">Image</th>
+                    <th class="product-name">Product</th>
+                    <th class="product-price">Price</th>
+                    <th class="product-quantity">Quantity</th>
+                  </tr>
+                </thead>
+                <tbody>
+                
+                    <tr>
+                      <td class="product-thumbnail">
+                        <img src="/static/blogapp/media/{{cart.product.image1}}" alt="Image" class="img-fluid">
+                      </td>
+                      <td class="product-name">
+                        <h2 class="h5 text-black">{{cart.product.name}}</h2>
+                      </td>
+                      <td>{{cart.price }}</td>
+                      <td>
+                      
+                       <form id="login-form" class="form" action="" method="POST">{% csrf_token %} 
+
+                       <input type="text" class="form-control text-center" name="quantity" value="{{cart.quantity}}" placeholder="{{cart.quantity}}"
+                            aria-label="Example text with button addon" aria-describedby="button-addon1">
+                        <button type="submit" class="btn btn-primary btn-md btn-block">Update Cart</button>
+                  
+                    </form>
+                </tbody>
+              </table>
+            </div>
+          </form>
+        </div>
+
+     {% endblock %}
